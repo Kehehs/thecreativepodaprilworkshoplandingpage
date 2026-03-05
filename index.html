@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Beyond Age · Workshop III · 5 April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════ */
+:root {
+  --void:    #ffffff;
+  --deep:    #f5f5f3;
+  --surface: #faf8f4;
+  --card:    #ffffff;
+  --lift:    #f0ece2;
+  --border:  #c8b898;
+  --border2: #a89868;
+
+  --ivory:   #1a1208;
+  --ivory2:  #2e2010;
+  --ivory3:  #3d3020;
+  --muted:   #5a4a30;
+  --dim:     #6b5a40;
+
+  --gold:    #8a6200;
+  --gold2:   #7a5400;
+  --gold3:   #b08020;
+  --gold-gl: rgba(138,98,0,0.08);
+  --gold-gd: rgba(138,98,0,0.35);
+
+  --rust:    #9e3a10;
+  --rust2:   #7a2c08;
+  --rust-gl: rgba(158,58,16,0.08);
+
+  --sage:    #245c38;
+  --sage-gl: rgba(36,92,56,0.08);
+
+  --wa:      #25d366;
+
+  --ease:    cubic-bezier(0.22,1,0.36,1);
+  --spring:  cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ══════════════════════════════════════════════
+   GLOBAL
+══════════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background: #ffffff;
+  color: var(--ivory3);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Custom cursor */
+.cursor {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 10000;
+  mix-blend-mode: difference;
+  transition: transform 0.15s var(--ease), width 0.3s, height 0.3s;
+  transform: translate(-50%, -50%);
+}
+.cursor.hover { width: 40px; height: 40px; opacity: 0.5; }
+
+/* Grain */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.78' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.042'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9998;
+}
+
+/* ══════════════════════════════════════════════
+   TOP BAR
+══════════════════════════════════════════════ */
+.topbar {
+  background: var(--gold);
+  padding: 0.55rem 2rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.topbar-scroll {
+  display: inline-flex; align-items: center; gap: 2.5rem;
+  white-space: nowrap;
+  animation: scroll-left 30s linear infinite;
+}
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.topbar-item {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.62rem; letter-spacing: 0.18em;
+  color: #1a1208; display: flex; align-items: center; gap: 0.75rem;
+}
+.topbar-sep { color: rgba(0,0,0,0.25); font-size: 0.5rem; }
+
+/* ══════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════ */
+nav {
+  position: sticky; top: 0; z-index: 500;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 2px solid var(--border);
+  padding: 0 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 1rem;
+}
+.nav-monogram {
+  width: 38px; height: 38px;
+  border: 1px solid var(--gold-gd);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem; font-style: italic; color: var(--gold);
+  flex-shrink: 0;
+}
+.nav-title {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.72rem; letter-spacing: 0.14em;
+  color: var(--ivory3);
+}
+.nav-subtitle {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); margin-top: 0.1rem;
+}
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.nav-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem; color: var(--gold);
+  font-style: italic;
+}
+.nav-cta {
+  background: var(--gold);
+  color: #1a1208;
+  border: none; border-radius: 2px;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.68rem; letter-spacing: 0.14em;
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  text-decoration: none; display: inline-block;
+}
+.nav-cta:hover {
+  background: var(--gold3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(201,168,76,0.3);
+}
+
+/* ══════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  position: relative; overflow: hidden;
+  background: #ffffff;
+}
+
+/* Background atmosphere */
+.hero-atmos {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.atmos-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px);
+}
+.ao1 { width: 600px; height: 600px; background: rgba(201,168,76,0.06); top: -100px; right: -100px; }
+.ao2 { width: 400px; height: 400px; background: rgba(184,90,40,0.07); bottom: 0; left: -50px; }
+.ao3 { width: 300px; height: 300px; background: rgba(201,168,76,0.04); top: 40%; left: 35%; }
+
+/* Hero grid layout */
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 0;
+  min-height: calc(100vh - 34px);
+  align-items: center;
+  position: relative; z-index: 2;
+}
+
+/* Left: text */
+.hero-left {
+  padding: 6rem 4rem 6rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid var(--border);
+}
+
+.hero-edition {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 2rem;
+  opacity: 0; animation: rise 0.8s var(--ease) 0.1s forwards;
+}
+.he-line { width: 3rem; height: 1px; background: var(--gold); }
+.he-text {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.62rem; letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 7vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--ivory);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+  opacity: 0; animation: rise 0.9s var(--ease) 0.2s forwards;
+}
+.hero-title-italic {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 5.5vw, 5.8rem);
+  font-weight: 400; font-style: italic;
+  line-height: 1;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+  opacity: 0; animation: rise 0.9s var(--ease) 0.35s forwards;
+}
+
+.hero-descriptor {
+  font-size: 0.92rem; font-weight: 500;
+  color: var(--muted);
+  line-height: 1.85; max-width: 460px;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: rise 0.8s var(--ease) 0.5s forwards;
+}
+.hero-descriptor em { color: var(--ivory3); font-style: normal; font-weight: 500; }
+
+/* Event details bar */
+.hero-meta {
+  display: flex; gap: 2rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: rise 0.8s var(--ease) 0.65s forwards;
+}
+.hm-item {}
+.hm-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.52rem; letter-spacing: 0.16em;
+  color: var(--dim); margin-bottom: 0.2rem;
+}
+.hm-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem; color: var(--ivory2);
+  font-style: italic; line-height: 1.3;
+}
+
+/* CTA group */
+.hero-ctas {
+  display: flex; align-items: center; gap: 1rem;
+  opacity: 0; animation: rise 0.8s var(--ease) 0.8s forwards;
+}
+.cta-primary {
+  background: var(--gold);
+  color: #1a1208;
+  border: none; border-radius: 2px;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.8rem; letter-spacing: 0.14em;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  text-decoration: none; display: inline-flex;
+  align-items: center; gap: 0.5rem;
+  position: relative; overflow: hidden;
+}
+.cta-primary::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.5s var(--ease);
+}
+.cta-primary:hover { background: var(--gold3); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.35); }
+.cta-primary:hover::after { transform: translateX(100%); }
+
+.cta-ghost {
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--ivory3);
+  border-radius: 2px;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  padding: 0.95rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.cta-ghost:hover { border-color: var(--gold-gd); color: var(--gold); background: var(--gold-gl); }
+
+/* Right: pricing panel */
+.hero-right {
+  background: var(--card);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 0;
+  opacity: 0; animation: slideIn 0.9s var(--ease) 0.4s forwards;
+  min-height: calc(100vh - 34px);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* pricing panel top */
+.pp-top {
+  padding: 2.5rem 2rem 2rem;
+  border-bottom: 2px solid var(--border);
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+}
+.pp-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  color: var(--dim); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.pp-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* Early bird tag */
+.eb-tag {
+  background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%);
+  border: 1px solid var(--gold-gd);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+}
+.eb-icon { font-size: 1rem; margin-top: 0.05rem; flex-shrink: 0; }
+.eb-body {}
+.eb-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--gold); margin-bottom: 0.15rem;
+}
+.eb-sub { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+.eb-sub strong { color: var(--ivory3); }
+.eb-countdown-wrap {
+  margin-top: 0.4rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.6rem; letter-spacing: 0.1em;
+  color: var(--gold);
+}
+#eb-countdown { font-weight: 700; }
+
+/* price display */
+.price-switch {
+  display: flex; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 3px; overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.ps-opt {
+  flex: 1; padding: 0.65rem 0.5rem;
+  text-align: center; cursor: pointer;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.6rem; letter-spacing: 0.12em;
+  color: var(--muted);
+  transition: all 0.2s;
+  background: transparent;
+  border: none;
+}
+.ps-opt.active {
+  background: var(--lift);
+  color: var(--ivory2);
+}
+
+.price-display {
+  text-align: center; padding: 1.5rem 0; margin-bottom: 1.5rem;
+  position: relative;
+}
+.pd-symbol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--gold);
+  vertical-align: super; line-height: 1;
+}
+.pd-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem; font-weight: 900;
+  color: var(--ivory); line-height: 1;
+  transition: all 0.35s var(--spring);
+}
+.pd-note {
+  font-size: 0.88rem; color: var(--muted);
+  margin-top: 0.25rem;
+}
+.pd-saving {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--sage-gl); border: 1px solid rgba(74,122,90,0.4);
+  color: var(--sage); border-radius: 2rem;
+  font-size: 0.68rem; font-weight: 600;
+  padding: 0.25rem 0.85rem; margin-top: 0.5rem;
+  transition: opacity 0.3s;
+}
+.pd-saving.hidden { opacity: 0; }
+.saving-check { color: var(--sage); }
+
+/* register btn in panel */
+.pp-register {
+  width: 100%; padding: 1rem;
+  background: var(--gold);
+  color: #1a1208;
+  border: none; border-radius: 2px;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.82rem; letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  margin-bottom: 0.65rem;
+  position: relative; overflow: hidden;
+}
+.pp-register:hover { background: var(--gold3); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+.pp-register::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  transform: translateX(-100%); transition: transform 0.5s;
+}
+.pp-register:hover::after { transform: translateX(100%); }
+
+.pp-wa {
+  width: 100%; padding: 0.75rem;
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--ivory3);
+  border-radius: 2px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.76rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.pp-wa:hover { border-color: var(--wa); color: var(--wa); background: rgba(37,211,102,0.05); }
+.wa-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--wa); }
+
+.pp-guarantee {
+  font-size: 0.66rem; color: var(--dim); text-align: center;
+  margin-top: 0.6rem; line-height: 1.5;
+}
+
+/* panel bottom: what's included */
+.pp-bottom {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+}
+.ppb-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.58rem; letter-spacing: 0.16em;
+  color: var(--dim); margin-bottom: 0.85rem;
+}
+.include-list { display: flex; flex-direction: column; gap: 0.55rem; }
+.inc-item {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  font-size: 0.95rem; color: var(--ivory3); line-height: 1.45;
+}
+.inc-check {
+  width: 16px; height: 16px;
+  border: 1px solid var(--gold-gd);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 0.05rem;
+  font-size: 0.5rem; color: var(--gold);
+}
+
+/* ══════════════════════════════════════════════
+   HERO BOTTOM STATS
+══════════════════════════════════════════════ */
+.hero-stats {
+  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  position: relative; z-index: 2;
+  background: var(--deep);
+}
+.hs-cell {
+  padding: 1.5rem 2.5rem;
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+}
+.hs-cell:last-child { border-right: none; }
+.hs-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 900; font-style: italic;
+  color: var(--gold); line-height: 1; flex-shrink: 0;
+}
+.hs-l {
+  font-size: 0.88rem; color: var(--muted);
+  line-height: 1.45; font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════
+   SECTION WRAPPER
+══════════════════════════════════════════════ */
+.section-wrap {
+  max-width: 1080px; margin: 0 auto; padding: 6rem 3rem;
+}
+.section-wrap.full { max-width: none; padding: 0; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.65rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.6rem; letter-spacing: 0.22em;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--gold); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 700; line-height: 1.05;
+  color: var(--ivory); margin-bottom: 0.5rem;
+}
+.section-title em { font-style: italic; color: var(--gold); font-weight: 400; }
+
+.section-lead {
+  font-size: 0.9rem; font-weight: 500; color: var(--muted);
+  line-height: 1.85; max-width: 580px; margin-bottom: 3.5rem;
+}
+
+/* ══════════════════════════════════════════════
+   WHAT UNFOLDS — TIMELINE
+══════════════════════════════════════════════ */
+.what-section { background: var(--deep); border-top: 1px solid var(--border); }
+
+.timeline-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 4px;
+  overflow: hidden;
+}
+.tl-col {
+  background: var(--card);
+  padding: 2rem 1.5rem;
+  position: relative; overflow: hidden;
+  transition: background 0.2s;
+}
+.tl-col:hover { background: var(--lift); }
+.tl-col::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.tlc-rust::before   { background: var(--rust); }
+.tlc-gold::before   { background: var(--gold); }
+.tlc-sage::before   { background: var(--sage); }
+.tlc-gold2::before  { background: var(--gold2); }
+.tlc-ivory::before  { background: var(--ivory3); }
+
+.tl-time {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.52rem; letter-spacing: 0.14em;
+  color: var(--dim); margin-bottom: 0.75rem;
+}
+.tl-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+.tl-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-style: italic; font-weight: 700;
+  color: var(--ivory2); margin-bottom: 0.4rem; line-height: 1.2;
+}
+.tl-desc {
+  font-size: 0.95rem; color: var(--muted);
+  line-height: 1.65; font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════
+   WHY IT'S WORTH IT
+══════════════════════════════════════════════ */
+.worth-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+}
+.worth-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+}
+.worth-left {}
+.worth-manifesto {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-style: italic; font-weight: 400;
+  color: var(--ivory2);
+  line-height: 1.55;
+  border-left: 3px solid var(--gold);
+  padding-left: 1.75rem;
+  margin-bottom: 2rem;
+}
+.worth-manifesto strong { font-style: normal; font-weight: 700; color: var(--gold); }
+
+.worth-points { display: flex; flex-direction: column; gap: 1rem; }
+.wp-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.wp-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-style: italic; font-weight: 900;
+  color: rgba(201,168,76,0.2);
+  line-height: 1; flex-shrink: 0; width: 2.5rem;
+}
+.wp-text {}
+.wp-title {
+  font-size: 0.88rem; font-weight: 600; color: var(--ivory2);
+  margin-bottom: 0.2rem;
+}
+.wp-body { font-size: 0.95rem; color: var(--muted); line-height: 1.6; font-weight: 500; }
+
+.worth-right {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2.5rem;
+}
+.wr-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-style: italic;
+  color: var(--ivory); margin-bottom: 1.25rem;
+}
+.value-list { display: flex; flex-direction: column; gap: 0; }
+.vl-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 2px solid var(--border);
+  font-size: 0.82rem;
+}
+.vl-row:last-child { border-bottom: none; }
+.vl-item { color: var(--ivory3); }
+.vl-val { font-weight: 600; color: var(--gold); font-style: italic; font-family: 'Playfair Display', serif; }
+.vl-total {
+  display: flex; justify-content: space-between;
+  padding-top: 1rem; margin-top: 0.5rem;
+  border-top: 1px solid var(--border2);
+}
+.vlt-label { font-size: 0.95rem; color: var(--muted); }
+.vlt-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; color: var(--gold); font-style: italic;
+  text-decoration: line-through; opacity: 0.5;
+}
+.vl-price-highlight {
+  margin-top: 0.75rem;
+  background: var(--gold-gl); border: 1px solid var(--gold-gd);
+  border-radius: 3px; padding: 1rem;
+  text-align: center;
+}
+.vlph-label { font-family: 'IM Fell English SC', serif; font-size: 0.58rem; letter-spacing: 0.16em; color: var(--gold); margin-bottom: 0.25rem; }
+.vlph-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 900; color: var(--ivory);
+}
+
+/* ══════════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════════ */
+.test-section {
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.test-section::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 0% 50%, rgba(201,168,76,0.05) 0%, transparent 50%),
+              radial-gradient(ellipse at 100% 50%, rgba(184,90,40,0.04) 0%, transparent 50%);
+}
+.test-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.test-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px; padding: 2rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.test-card:hover { transform: translateY(-4px); border-color: var(--gold-gd); }
+.tc-quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem; line-height: 1;
+  color: rgba(201,168,76,0.1);
+  position: absolute; top: 0.5rem; left: 1.25rem;
+  pointer-events: none;
+}
+.tc-text {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.02rem; font-style: italic;
+  color: var(--ivory2); line-height: 1.75;
+  margin-bottom: 1.25rem; position: relative; z-index: 1;
+}
+.tc-byline { display: flex; align-items: center; gap: 0.75rem; }
+.tc-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--rust), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem; font-weight: 700; color: #1a1208;
+  flex-shrink: 0;
+}
+.tc-name {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.6rem; letter-spacing: 0.12em;
+  color: var(--ivory3);
+}
+.tc-workshop { font-size: 0.65rem; color: var(--dim); margin-top: 0.1rem; }
+
+/* ══════════════════════════════════════════════
+   VENUE
+══════════════════════════════════════════════ */
+.venue-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.venue-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.venue-visual {
+  position: relative;
+}
+.venue-card-art {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+/* Decorative map-like illustration */
+.vca-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #1e1a14 0%, #0a0906 100%);
+}
+.vca-grid-line {
+  position: absolute; background: rgba(201,168,76,0.06);
+}
+.gl-h { height: 1px; left: 0; right: 0; }
+.gl-v { width: 1px; top: 0; bottom: 0; }
+.venue-pin-wrap {
+  position: relative; z-index: 2;
+  text-align: center;
+}
+.venue-pin-icon {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
+  animation: pin-float 3s ease-in-out infinite;
+  display: block; margin-bottom: 0.5rem;
+}
+@keyframes pin-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.venue-pin-label {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 1rem;
+  color: var(--ivory);
+  background: rgba(10,9,6,0.85);
+  padding: 0.35rem 1rem; border-radius: 2rem;
+  border: 1px solid var(--border2);
+  display: inline-block;
+}
+
+/* Gold tag overlay */
+.venue-tag-overlay {
+  position: absolute; bottom: -1rem; right: -1rem;
+  background: var(--gold);
+  color: #1a1208;
+  padding: 1rem 1.25rem;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.vto-time {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 900; line-height: 1;
+}
+.vto-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.5rem; letter-spacing: 0.14em;
+  opacity: 0.7; margin-top: 0.2rem;
+}
+
+.venue-info {}
+.venue-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900;
+  color: var(--ivory); line-height: 1.1; margin-bottom: 0.3rem;
+}
+.venue-name-italic {
+  font-style: italic; font-weight: 400; color: var(--gold); font-size: 2rem;
+}
+.venue-address {
+  font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6;
+}
+.venue-facts { display: flex; flex-direction: column; gap: 0.85rem; }
+.vf-item { display: flex; gap: 0.85rem; align-items: flex-start; }
+.vf-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 0.45rem;
+}
+.vf-text { font-size: 0.95rem; color: var(--ivory3); line-height: 1.55; }
+.vf-text strong { color: var(--ivory); font-weight: 600; }
+
+/* ══════════════════════════════════════════════
+   COUNTDOWN SECTION
+══════════════════════════════════════════════ */
+.cd-section {
+  background: var(--gold);
+  padding: 4rem 3rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cd-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cd-eyebrow {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.62rem; letter-spacing: 0.22em;
+  color: rgba(0,0,0,0.45); margin-bottom: 1rem;
+  display: block;
+}
+.cd-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 900; color: #1a1208;
+  margin-bottom: 2rem; line-height: 1.1;
+}
+.cd-grid {
+  display: inline-flex; gap: 0; align-items: stretch;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-radius: 4px; overflow: hidden;
+  background: rgba(0,0,0,0.08);
+}
+.cd-unit {
+  padding: 1.5rem 2rem;
+  border-right: 1px solid rgba(0,0,0,0.12);
+  min-width: 100px;
+}
+.cd-unit:last-child { border-right: none; }
+.cd-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900; color: #1a1208;
+  line-height: 1; display: block;
+  transition: transform 0.2s var(--spring);
+}
+.cd-num.bump { transform: scale(1.15); }
+.cd-unit-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.52rem; letter-spacing: 0.16em;
+  color: rgba(0,0,0,0.4); margin-top: 0.3rem; display: block;
+}
+.cd-sub {
+  margin-top: 1.5rem;
+  font-size: 0.82rem; color: rgba(0,0,0,0.5);
+  font-style: italic;
+}
+.cd-sub strong { color: rgba(0,0,0,0.7); }
+
+/* ══════════════════════════════════════════════
+   REGISTRATION FORM
+══════════════════════════════════════════════ */
+.reg-section {
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+}
+.reg-grid {
+  display: grid; grid-template-columns: 1fr 480px; gap: 5rem; align-items: start;
+}
+.reg-left {}
+.reg-form-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden;
+  position: sticky; top: 90px;
+}
+.rfh {
+  background: #1a1208;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.rfh-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-style: italic; color: var(--ivory);
+}
+.rfh-badge {
+  background: var(--gold-gl); border: 1px solid var(--gold-gd);
+  border-radius: 2rem; padding: 0.2rem 0.75rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.52rem; letter-spacing: 0.1em;
+  color: var(--gold);
+}
+.rfb { padding: 2rem; }
+
+/* price selector */
+.psel {
+  display: flex; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 3px; overflow: hidden; margin-bottom: 1.5rem;
+}
+.psel-opt {
+  flex: 1; padding: 0.85rem;
+  cursor: pointer; text-align: center;
+  background: transparent;
+  border: none; transition: background 0.2s;
+  position: relative;
+}
+.psel-opt.active { background: var(--lift); }
+.psel-opt.active::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold);
+}
+.pso-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.58rem; letter-spacing: 0.12em;
+  color: var(--muted); margin-bottom: 0.2rem;
+}
+.pso-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--ivory); font-style: italic;
+}
+.psel-opt.active .pso-label { color: var(--gold); }
+.psel-opt.active .pso-price { color: var(--gold); }
+.pso-note { font-size: 0.6rem; color: var(--dim); margin-top: 0.1rem; }
+
+.form-fields { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.25rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.ff {}
+.ff-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.5rem; letter-spacing: 0.14em;
+  color: var(--dim); margin-bottom: 0.3rem; display: block;
+}
+.ff-input, .ff-select {
+  width: 100%; padding: 0.7rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  font-family: 'Raleway', sans-serif; font-size: 1rem;
+  color: var(--ivory2); outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ff-input:focus, .ff-select:focus {
+  border-color: var(--gold-gd);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+}
+.ff-input::placeholder { color: var(--dim); }
+.ff-select option { background: var(--surface); }
+
+/* heard chips */
+.heard-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.hc {
+  font-size: 0.88rem; padding: 0.5rem 1rem;
+  border: 1px solid var(--border2); border-radius: 2rem;
+  cursor: pointer; background: transparent; color: var(--muted);
+  transition: all 0.15s; user-select: none;
+  font-family: 'Raleway', sans-serif;
+}
+.hc:hover { border-color: var(--gold-gd); color: var(--gold); }
+.hc.on { background: var(--gold-gl); border-color: var(--gold-gd); color: var(--gold); }
+
+.form-submit {
+  width: 100%; padding: 1rem;
+  background: var(--gold); color: #1a1208;
+  border: none; border-radius: 2px;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.82rem; letter-spacing: 0.16em;
+  cursor: pointer; margin-bottom: 0.65rem;
+  transition: all 0.25s var(--ease);
+  overflow: hidden; position: relative;
+}
+.form-submit:hover { background: var(--gold3); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(201,168,76,0.35); }
+
+.form-wa-alt {
+  width: 100%; padding: 0.7rem;
+  background: transparent; border: 1px solid var(--border2);
+  color: var(--ivory3); border-radius: 2px;
+  font-family: 'Raleway', sans-serif; font-size: 0.75rem;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.form-wa-alt:hover { border-color: var(--wa); color: var(--wa); }
+
+.form-note { font-size: 0.65rem; color: var(--dim); text-align: center; margin-top: 0.6rem; line-height: 1.5; }
+
+/* success */
+.form-success {
+  display: none; padding: 2.5rem;
+  text-align: center;
+}
+.fs-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.fs-h {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-style: italic; color: var(--ivory);
+  margin-bottom: 0.5rem;
+}
+.fs-b { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+.fs-wa {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 1rem; background: var(--wa); color: #fff;
+  border-radius: 2px; padding: 0.65rem 1.25rem;
+  font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.fs-wa:hover { background: #1ea952; transform: translateY(-1px); }
+
+/* ══════════════════════════════════════════════
+   FAQ
+══════════════════════════════════════════════ */
+.faq-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.faq-inner { max-width: 680px; margin: 0 auto; }
+.faq-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-style: italic; font-weight: 700;
+  color: var(--ivory); text-align: center; margin-bottom: 2.5rem;
+}
+.faq-item { border-bottom: 2px solid var(--border); }
+.faq-q {
+  width: 100%; padding: 1.25rem 0;
+  background: none; border: none;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; cursor: pointer;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.05rem; color: var(--ivory2);
+  text-align: left; transition: color 0.2s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-arrow { font-size: 0.7rem; color: var(--muted); transition: transform 0.3s var(--spring); flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s var(--ease), padding 0.3s;
+  font-size: 0.95rem; color: var(--muted); line-height: 1.75; font-weight: 500;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.25rem; }
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+footer {
+  background: #1a1208;
+  border-top: 2px solid #a89868;
+  padding: 3rem 3rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-style: italic;
+  color: var(--gold); margin-bottom: 0.4rem;
+}
+.footer-sub {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.55rem; letter-spacing: 0.2em;
+  color: var(--dim); margin-bottom: 1.5rem;
+}
+.footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.75rem; color: var(--dim); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold); }
+.footer-copy { font-family: 'IM Fell English SC', serif; font-size: 0.52rem; letter-spacing: 0.12em; color: var(--border2); }
+
+/* ══════════════════════════════════════════════
+   STICKY BOTTOM BAR
+══════════════════════════════════════════════ */
+.sticky-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 400;
+  background: rgba(26,18,8,0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  transform: translateY(100%);
+  transition: transform 0.4s var(--ease);
+}
+.sticky-bar.visible { transform: translateY(0); }
+.sb-left { display: flex; align-items: center; gap: 1.5rem; }
+.sb-event {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem; font-style: italic; color: var(--ivory);
+}
+.sb-detail {
+  font-size: 0.88rem; color: var(--muted);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.sb-right { display: flex; align-items: center; gap: 0.85rem; }
+.sb-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-style: italic; color: var(--gold);
+}
+.sb-price-note { font-size: 0.6rem; color: var(--dim); }
+.sb-cta {
+  background: var(--gold); color: #1a1208;
+  border: none; border-radius: 2px;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  padding: 0.65rem 1.4rem; cursor: pointer;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+  white-space: nowrap;
+}
+.sb-cta:hover { background: var(--gold3); }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-right { min-height: auto; border-left: none; border-top: 1px solid var(--border); }
+  .hero-left { padding: 4rem 2rem; border-right: none; }
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+  .timeline-grid { grid-template-columns: 1fr; }
+  .worth-grid, .venue-grid, .reg-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .test-grid { grid-template-columns: 1fr; }
+  .reg-form-wrap { position: static; }
+  nav { padding: 0 1.5rem; }
+  .nav-price { display: none; }
+  .section-wrap { padding: 4rem 1.5rem; }
+  .sb-left { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+}
+
+@media (max-width: 600px) {
+  .hero-title { font-size: 3rem; }
+  .hero-title-italic { font-size: 2.4rem; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .hs-cell { padding: 1rem 1.25rem; }
+  .cd-unit { padding: 1rem; min-width: 70px; }
+  .field-row { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   WHITE BACKGROUND OVERRIDES
+   All dark panels → clean white/light
+═══════════════════════════════════════════ */
+body { background: #ffffff !important; }
+
+/* Grain off */
+body::before { display: none !important; }
+
+/* Nav — crisp white */
+nav {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom: 2px solid #c8b898 !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.nav-title  { color: #1a1208 !important; }
+.nav-subtitle { color: #5a4a30 !important; }
+.nav-monogram { border-color: rgba(138,98,0,0.5) !important; }
+
+/* Hero */
+.hero, .hero-left { background: #ffffff !important; }
+.hero-right { background: #faf8f4 !important; border-left: 2px solid #c8b898 !important; }
+.hero-atmos .atmos-orb { opacity: 0.35 !important; }
+
+/* Stats bar */
+.hero-stats { background: #f5f2ec !important; border-top: 2px solid #c8b898 !important; }
+.hs-cell    { border-right: 2px solid #c8b898 !important; }
+.hs-l       { color: #4a3c28 !important; font-weight: 600 !important; font-size: 0.85rem !important; }
+
+/* What unfolds */
+.what-section { background: #f9f7f3 !important; border-top: 2px solid #c8b898 !important; }
+.tl-col       { background: #ffffff !important; border: 1px solid #c8b898 !important; }
+.tl-col:hover { background: #fdf9f4 !important; }
+.tl-name { color: #1a1208 !important; }
+.tl-desc { color: #3d3020 !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+.tl-time { color: #6b5a40 !important; font-weight: 700 !important; }
+
+/* Worth section */
+.worth-section { background: #ffffff !important; }
+.worth-right   { background: #faf8f4 !important; border: 2px solid #c8b898 !important; }
+.worth-manifesto { color: #1a1208 !important; }
+.wp-title { color: #1a1208 !important; font-weight: 700 !important; font-size: 0.95rem !important; }
+.wp-body  { color: #3d3020 !important; font-weight: 500 !important; font-size: 0.92rem !important; }
+.wr-title { color: #1a1208 !important; }
+.vl-item  { color: #1a1208 !important; font-weight: 600 !important; }
+
+/* Testimonials */
+.test-section { background: #f5f2ec !important; }
+.test-card    { background: #ffffff !important; border: 2px solid #c8b898 !important; }
+.tc-text  { color: #1a1208 !important; font-size: 1rem !important; line-height: 1.85 !important; }
+.tc-name  { color: #1a1208 !important; font-weight: 700 !important; }
+.tc-workshop { color: #5a4a30 !important; font-weight: 500 !important; }
+
+/* Venue */
+.venue-section { background: #ffffff !important; }
+.venue-card-art .vca-bg { background: #1a1208 !important; }
+.venue-name    { color: #1a1208 !important; }
+.venue-address { color: #3d3020 !important; font-weight: 600 !important; font-size: 0.95rem !important; }
+.vf-text       { color: #2e2010 !important; font-weight: 500 !important; font-size: 0.95rem !important; }
+.vf-text strong { color: #1a1208 !important; font-weight: 700 !important; }
+
+/* Registration */
+.reg-section  { background: #f9f7f3 !important; }
+.reg-form-wrap { background: #ffffff !important; border: 2px solid #c8b898 !important; }
+.rfh { background: #1a1208 !important; }
+.rfb { background: #ffffff !important; }
+.psel      { border: 2px solid #c8b898 !important; }
+.psel-opt.active { background: #f0ece2 !important; }
+.pso-price { color: #1a1208 !important; font-size: 1.35rem !important; }
+.pso-label { color: #5a4a30 !important; font-weight: 700 !important; font-size: 0.65rem !important; }
+.pso-note  { color: #6b5a40 !important; font-size: 0.68rem !important; font-weight: 600 !important; }
+
+/* Form inputs — big, high contrast, easy tap */
+.ff-input, .ff-select {
+  background: #ffffff !important;
+  border: 2px solid #a89868 !important;
+  border-radius: 6px !important;
+  font-size: 1.05rem !important;
+  color: #1a1208 !important;
+  padding: 0.9rem 1rem !important;
+  min-height: 52px !important;
+}
+.ff-input:focus, .ff-select:focus {
+  border-color: #8a6200 !important;
+  box-shadow: 0 0 0 4px rgba(138,98,0,0.12) !important;
+}
+.ff-input::placeholder { color: #8a7a5a !important; font-size: 0.95rem !important; }
+.ff-label {
+  color: #1a1208 !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+}
+.ff-select option { background: #ffffff !important; color: #1a1208 !important; }
+
+/* Heard chips */
+.hc {
+  background: #faf8f4 !important;
+  border: 2px solid #c8b898 !important;
+  color: #3d3020 !important;
+  font-size: 0.9rem !important;
+  padding: 0.5rem 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 2rem !important;
+}
+.hc.on {
+  background: rgba(138,98,0,0.08) !important;
+  border-color: #8a6200 !important;
+  color: #8a6200 !important;
+}
+
+/* Submit button — big, unmissable */
+.form-submit {
+  font-size: 1rem !important;
+  padding: 1.1rem !important;
+  letter-spacing: 0.1em !important;
+  min-height: 56px !important;
+}
+.form-wa-alt {
+  border: 2px solid #c8b898 !important;
+  color: #3d3020 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  min-height: 50px !important;
+}
+
+/* FAQ section */
+.faq-section { background: #ffffff !important; border-top: 2px solid #c8b898 !important; }
+.faq-item    { border-bottom: 2px solid #e0d4b8 !important; }
+.faq-title   { color: #1a1208 !important; }
+.faq-q {
+  color: #1a1208 !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+  padding: 1.25rem 0 !important;
+}
+.faq-q:hover { color: #9e3a10 !important; }
+.faq-a {
+  color: #3d3020 !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  line-height: 1.8 !important;
+}
+
+/* Sticky bar keeps dark — good contrast */
+.sticky-bar { background: rgba(26,18,8,0.97) !important; border-top: 2px solid #a89868 !important; }
+
+/* Section titles everywhere */
+.section-title { color: #1a1208 !important; }
+.section-lead  { color: #3d3020 !important; font-weight: 500 !important; font-size: 1rem !important; }
+.eyebrow { color: #9e3a10 !important; }
+.eyebrow::before { background: #9e3a10 !important; }
+
+/* Include list in hero panel */
+.inc-item { color: #2e2010 !important; font-weight: 600 !important; font-size: 0.9rem !important; }
+.inc-check { border-color: rgba(138,98,0,0.6) !important; color: #8a6200 !important; }
+
+/* Hero meta */
+.hm-label { color: #6b5a40 !important; font-weight: 700 !important; }
+.hm-value { color: #1a1208 !important; font-size: 1rem !important; font-weight: 600 !important; }
+.hero-meta { border-top: 2px solid #c8b898 !important; border-bottom: 2px solid #c8b898 !important; }
+
+/* Price display in hero panel */
+.pp-label { color: #4a3c28 !important; font-weight: 700 !important; }
+.pp-label::after { background: #c8b898 !important; height: 2px !important; }
+.pd-note { color: #5a4a30 !important; font-weight: 600 !important; font-size: 0.8rem !important; }
+.pp-guarantee { color: #5a4a30 !important; font-weight: 500 !important; font-size: 0.72rem !important; }
+.ppb-label { color: #5a4a30 !important; font-weight: 700 !important; font-size: 0.65rem !important; }
+.pp-top { background: #faf8f4 !important; }
+.pp-bottom { background: #ffffff !important; border-top: 2px solid #c8b898 !important; }
+
+/* ═══════════════════════════════════════════
+   SENIOR MOBILE OPTIMISATION
+   Larger, bolder, easier everything
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Base font bigger */
+  body { font-size: 17px !important; }
+
+  /* Hero text */
+  .hero-title        { font-size: 3.2rem !important; line-height: 0.95 !important; }
+  .hero-title-italic { font-size: 2.6rem !important; }
+  .hero-descriptor   { font-size: 1.1rem !important; font-weight: 500 !important; line-height: 1.85 !important; }
+  .hero-edition .he-text { font-size: 0.7rem !important; }
+
+  /* Event meta chips */
+  .hm-value { font-size: 1rem !important; font-weight: 700 !important; }
+  .hm-label { font-size: 0.62rem !important; }
+
+  /* CTA buttons — huge tap targets */
+  .cta-primary {
+    font-size: 1rem !important;
+    padding: 1.1rem 1.75rem !important;
+    min-height: 56px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .cta-ghost {
+    font-size: 0.92rem !important;
+    min-height: 50px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .hero-ctas { flex-direction: column !important; }
+
+  /* Stats */
+  .hs-n { font-size: 2.2rem !important; }
+  .hs-l { font-size: 0.88rem !important; line-height: 1.5 !important; }
+
+  /* Timeline */
+  .tl-name { font-size: 1.2rem !important; }
+  .tl-desc { font-size: 1rem !important; line-height: 1.8 !important; font-weight: 500 !important; }
+
+  /* Worth */
+  .worth-manifesto { font-size: 1.2rem !important; line-height: 1.65 !important; }
+  .wp-title { font-size: 1.05rem !important; }
+  .wp-body  { font-size: 0.95rem !important; line-height: 1.75 !important; }
+  .vl-item  { font-size: 0.95rem !important; }
+  .vl-val   { font-size: 1rem !important; }
+
+  /* Testimonials */
+  .tc-text { font-size: 1.05rem !important; line-height: 1.85 !important; }
+  .tc-name { font-size: 0.75rem !important; }
+
+  /* Venue */
+  .venue-name { font-size: 2rem !important; }
+  .venue-address { font-size: 1rem !important; }
+  .vf-text { font-size: 0.97rem !important; line-height: 1.75 !important; }
+
+  /* Countdown text */
+  .cd-headline { font-size: 1.4rem !important; }
+  .cd-sub { font-size: 1rem !important; }
+
+  /* Registration form */
+  .ff-input, .ff-select {
+    font-size: 1.1rem !important;
+    padding: 1rem 1rem !important;
+    min-height: 56px !important;
+  }
+  .ff-label { font-size: 0.72rem !important; font-weight: 700 !important; }
+  .hc { font-size: 0.92rem !important; padding: 0.55rem 1rem !important; min-height: 42px !important; }
+  .form-submit {
+    font-size: 1.05rem !important;
+    padding: 1.15rem !important;
+    min-height: 58px !important;
+    letter-spacing: 0.12em !important;
+  }
+  .form-wa-alt { font-size: 0.95rem !important; min-height: 52px !important; }
+  .pso-price { font-size: 1.5rem !important; }
+  .rfh-title { font-size: 1.1rem !important; }
+
+  /* FAQ */
+  .faq-title { font-size: 1.8rem !important; }
+  .faq-q     { font-size: 1.05rem !important; font-weight: 700 !important; padding: 1.25rem 0 !important; }
+  .faq-a     { font-size: 1rem !important; line-height: 1.85 !important; }
+
+  /* Section typography */
+  .section-title { font-size: 2.2rem !important; }
+  .section-lead  { font-size: 1.05rem !important; line-height: 1.85 !important; }
+
+  /* Nav */
+  nav { height: 60px !important; padding: 0 1rem !important; }
+  .nav-title { font-size: 0.82rem !important; }
+  .nav-cta   { font-size: 0.72rem !important; padding: 0.55rem 1rem !important; }
+
+  /* Sticky bar */
+  .sb-event  { font-size: 0.92rem !important; }
+  .sb-detail { font-size: 0.75rem !important; }
+  .sb-price  { font-size: 1.15rem !important; }
+  .sb-cta    { font-size: 0.78rem !important; padding: 0.65rem 1.1rem !important; min-height: 44px !important; }
+
+  /* Include list */
+  .inc-item { font-size: 0.95rem !important; line-height: 1.6 !important; }
+
+  /* Price panel in hero */
+  .pp-register { font-size: 1rem !important; padding: 1.1rem !important; min-height: 54px !important; }
+  .pp-wa { font-size: 0.92rem !important; min-height: 50px !important; }
+  .eb-headline { font-size: 0.95rem !important; }
+  .eb-sub { font-size: 0.8rem !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ══ TOP BAR ══ -->
+<div class="topbar">
+  <div class="topbar-scroll">
+    <span class="topbar-item">Art Beyond Age · Workshop III <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">5th April 2026 · 11:30 AM <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">Musée Art Café · Dehradun <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">Early Bird ₹799 — Closes 20 March <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">Only 25 Seats Available <span class="topbar-sep">✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="topbar-item">Art Beyond Age · Workshop III <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">5th April 2026 · 11:30 AM <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">Musée Art Café · Dehradun <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">Early Bird ₹799 — Closes 20 March <span class="topbar-sep">✦</span></span>
+    <span class="topbar-item">Only 25 Seats Available <span class="topbar-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-monogram">A</div>
+    <div>
+      <div class="nav-title">Art Beyond Age</div>
+      <div class="nav-subtitle">A Creative Gathering · Dehradun</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-price">Early Bird <strong>₹799</strong></div>
+    <a href="#register" class="nav-cta">Reserve My Seat</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-atmos">
+    <div class="atmos-orb ao1"></div>
+    <div class="atmos-orb ao2"></div>
+    <div class="atmos-orb ao3"></div>
+  </div>
+
+  <div class="hero-content">
+
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="hero-edition">
+        <div class="he-line"></div>
+        <div class="he-text">Workshop III · April 2026 · Dehradun</div>
+      </div>
+
+      <h1 class="hero-title">Art Beyond</h1>
+      <div class="hero-title-italic">Age</div>
+
+      <p class="hero-descriptor">
+        A <em>90-minute curated creative gathering</em> for those above 50 who have been meaning to try something with their hands for years. Not a class. Not a course. A morning where your story becomes art — and your hands remember what they always knew.
+      </p>
+
+      <div class="hero-meta">
+        <div class="hm-item">
+          <div class="hm-label">Date</div>
+          <div class="hm-value">5th April, 2026</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-label">Time</div>
+          <div class="hm-value">11:30 AM onwards</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-label">Venue</div>
+          <div class="hm-value">Musée Art Café, Dehradun</div>
+        </div>
+        <div class="hm-item">
+          <div class="hm-label">For</div>
+          <div class="hm-value">50 & above</div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#register" class="cta-primary">Reserve My Seat →</a>
+        <a href="#what-unfolds" class="cta-ghost">What to Expect ↓</a>
+      </div>
+    </div>
+
+    <!-- Right: pricing panel -->
+    <div class="hero-right">
+      <div class="pp-top">
+        <div class="pp-label">Secure Your Place</div>
+
+        <div class="eb-tag">
+          <div class="eb-icon">⏳</div>
+          <div class="eb-body">
+            <div class="eb-headline">Early Bird Closes 20th March</div>
+            <div class="eb-sub">Save ₹200 — register before <strong>20 March 2026</strong></div>
+            <div class="eb-countdown-wrap">Closing in: <span id="eb-countdown">calculating…</span></div>
+          </div>
+        </div>
+
+        <div class="price-switch">
+          <button class="ps-opt active" id="ps-early" onclick="selectPrice('early')">
+            <div style="font-family:'IM Fell English SC',serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--gold)">Early Bird</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold);font-style:italic">₹799</div>
+            <div style="font-size:0.58rem;color:var(--dim)">Until 20 March</div>
+          </button>
+          <button class="ps-opt" id="ps-reg" onclick="selectPrice('regular')">
+            <div style="font-family:'IM Fell English SC',serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--muted)">Regular</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ivory);font-style:italic">₹999</div>
+            <div style="font-size:0.58rem;color:var(--dim)">After 20 March</div>
+          </button>
+        </div>
+
+        <div class="price-display">
+          <span class="pd-symbol">₹</span><span class="pd-amount" id="pp-amount">799</span>
+          <div class="pd-note" id="pp-note">Early Bird Price · Valid until 20 March 2026</div>
+          <div class="pd-saving" id="pp-saving"><span class="saving-check">✓</span> You save ₹200 with Early Bird</div>
+        </div>
+
+        <button class="pp-register" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">
+          Reserve My Seat Now
+        </button>
+        <button class="pp-wa" onclick="window.open('https://wa.me/919910884784?text=I%20want%20to%20register%20for%20Art%20Beyond%20Age%20Workshop%203%20on%205%20April%202026','_blank')">
+          <span class="wa-dot"></span> Register via WhatsApp
+        </button>
+        <div class="pp-guarantee">✦ Spot confirmed via WhatsApp within 2 hours of registration</div>
+      </div>
+
+      <div class="pp-bottom">
+        <div class="ppb-label">What's Included</div>
+        <div class="include-list">
+          <div class="inc-item"><div class="inc-check">✦</div>90-minute facilitated creative session</div>
+          <div class="inc-item"><div class="inc-check">✦</div>All premium art materials provided</div>
+          <div class="inc-item"><div class="inc-check">✦</div>Tea &amp; coffee on arrival</div>
+          <div class="inc-item"><div class="inc-check">✦</div>Your finished artwork to take home</div>
+          <div class="inc-item"><div class="inc-check">✦</div>Professional photograph of your artwork</div>
+          <div class="inc-item"><div class="inc-check">✦</div>Certificate of participation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="hero-stats">
+    <div class="hs-cell">
+      <div class="hs-n">III</div>
+      <div class="hs-l">Third edition<br>of the series</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-n">32</div>
+      <div class="hs-l">Participants across<br>Workshops I &amp; II</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-n">25</div>
+      <div class="hs-l">Seats available<br>this session only</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-n">90</div>
+      <div class="hs-l">Minutes that will<br>stay with you</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT UNFOLDS ══ -->
+<section class="what-section" id="what-unfolds">
+  <div class="section-wrap">
+    <div class="eyebrow">The Experience</div>
+    <h2 class="section-title">What <em>Unfolds</em></h2>
+    <p class="section-lead">Every moment of the 90 minutes is designed with intention. This is not a class where you are taught. It is a space where you discover.</p>
+
+    <div class="timeline-grid">
+      <div class="tl-col tlc-rust">
+        <div class="tl-time">0 – 15 min</div>
+        <div class="tl-icon">☕</div>
+        <div class="tl-name">Arrival & The First Question</div>
+        <div class="tl-desc">Tea in hand, you settle in. A small folded card waits at your place with one question — not about art, but about you. One word. No pressure. The morning begins here.</div>
+      </div>
+      <div class="tl-col tlc-gold">
+        <div class="tl-time">15 – 25 min</div>
+        <div class="tl-icon">✋</div>
+        <div class="tl-name">Ink Your Hand</div>
+        <div class="tl-desc">You press your paint-covered hand onto paper and lift it slowly. What you see is already yours. Already beautiful. The artwork begins — without a single brushstroke of instruction.</div>
+      </div>
+      <div class="tl-col tlc-sage">
+        <div class="tl-time">25 – 65 min</div>
+        <div class="tl-icon">🎨</div>
+        <div class="tl-name">The Creation</div>
+        <div class="tl-desc">Forty uninterrupted minutes with warm colours and a theme that matters: <em>Something My Hands Remember.</em> No right answer. No wrong mark. Just your hands in conversation with memory.</div>
+      </div>
+      <div class="tl-col tlc-gold2">
+        <div class="tl-time">65 – 80 min</div>
+        <div class="tl-icon">🪑</div>
+        <div class="tl-name">The Circle</div>
+        <div class="tl-desc">Everyone holds up what they made. Each person completes one sentence: <em>My hands have known…</em> You will hear things in this circle that you will remember long after the morning ends.</div>
+      </div>
+      <div class="tl-col tlc-ivory">
+        <div class="tl-time">80 – 90 min</div>
+        <div class="tl-icon">📖</div>
+        <div class="tl-name">The Closing</div>
+        <div class="tl-desc">You open your arrival card. You write one word for how you feel now. Most people notice the difference immediately — in their own handwriting. Then you take your artwork home.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY IT'S WORTH IT ══ -->
+<section class="worth-section">
+  <div class="section-wrap">
+    <div class="worth-grid">
+      <div class="worth-left">
+        <div class="eyebrow">The Value</div>
+        <h2 class="section-title" style="margin-bottom:1.5rem">Why <em>₹999</em> is the<br>price of a morning<br>that costs nothing<br>to miss — and<br>everything to have</h2>
+
+        <div class="worth-manifesto">
+          "The people who came in January didn't come to learn to paint. They came to <strong>remember something about themselves</strong> they had set aside."
+          <div style="font-size:0.7rem;color:var(--dim);margin-top:0.75rem;font-style:normal;font-family:'IM Fell English SC',serif;letter-spacing:0.1em">— Chandni Kamboj, Founder · Art Beyond Age</div>
+        </div>
+
+        <div class="worth-points">
+          <div class="wp-item">
+            <div class="wp-num">1</div>
+            <div class="wp-text">
+              <div class="wp-title">You are paying for a facilitated experience, not a product</div>
+              <div class="wp-body">Chandni has spent years developing the methodology behind these 90 minutes. Every moment is designed. The silence, the questions, the sharing circle — none of it happens by accident.</div>
+            </div>
+          </div>
+          <div class="wp-item">
+            <div class="wp-num">2</div>
+            <div class="wp-text">
+              <div class="wp-title">Premium materials, intimate setting, personal attention</div>
+              <div class="wp-body">25 people maximum. Professional colours. Musée Art Café — one of Dehradun's finest spaces. This is not a community centre class. The setting is chosen to match the quality of the experience.</div>
+            </div>
+          </div>
+          <div class="wp-item">
+            <div class="wp-num">3</div>
+            <div class="wp-text">
+              <div class="wp-title">You leave with something no money can buy</div>
+              <div class="wp-body">An artwork made entirely by your hands, from your memories. A photograph of it. A certificate. And the particular feeling of having been truly seen by a room full of people who were paying the same kind of attention.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="worth-right">
+        <div class="wr-title">Everything is included</div>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.75rem">
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>90-minute expert-facilitated creative session</div>
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>All premium colour art materials</div>
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>Tea &amp; coffee on arrival at Musée Art Café</div>
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>Your finished artwork to take home</div>
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>Professional photograph of your artwork</div>
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>Certificate of participation</div>
+          <div class="inc-item" style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;color:#2e2010;font-weight:600;line-height:1.5"><div class="inc-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(138,98,0,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#8a6200;font-size:0.6rem;margin-top:0.1rem">✦</div>The sharing circle — 90 minutes with people paying the same kind of attention</div>
+        </div>
+        <div class="vl-price-highlight">
+          <div class="vlph-label">You Pay — Early Bird</div>
+          <div class="vlph-price">₹<span style="font-size:3rem">799</span></div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.25rem">Regular price ₹999 after 20 March</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="test-section">
+  <div class="section-wrap">
+    <div class="eyebrow">Past Participants</div>
+    <h2 class="section-title">What they said <em>after</em></h2>
+    <p class="section-lead">From Workshops I &amp; II. In their own words, unedited.</p>
+
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="tc-quote-mark">"</div>
+        <div class="tc-text">"I came thinking I'd just colour something for two hours. I left with a painting that made me cry — and I don't know exactly why. But it was the good kind. The kind you haven't felt in years."</div>
+        <div class="tc-byline">
+          <div class="tc-avatar">S</div>
+          <div>
+            <div class="tc-name">Sunita Ji, 64</div>
+            <div class="tc-workshop">Workshop I · September 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="tc-quote-mark">"</div>
+        <div class="tc-text">"I haven't done anything creative since school. In ninety minutes I made something I'm genuinely proud of. I keep it on my desk. My children don't believe I made it."</div>
+        <div class="tc-byline">
+          <div class="tc-avatar">R</div>
+          <div>
+            <div class="tc-name">Rajesh Ji, 71</div>
+            <div class="tc-workshop">Workshop II · January 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="tc-quote-mark">"</div>
+        <div class="tc-text">"My hands remembered things I forgot they knew. I pressed my hand on that paper and something opened up. I don't have better words than that. Something opened."</div>
+        <div class="tc-byline">
+          <div class="tc-avatar">M</div>
+          <div>
+            <div class="tc-name">Meena Ji, 67</div>
+            <div class="tc-workshop">Workshop II · January 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VENUE ══ -->
+<section class="venue-section">
+  <div class="section-wrap">
+    <div class="venue-grid">
+      <div class="venue-visual">
+        <div class="venue-card-art">
+          <div class="vca-bg"></div>
+          <div class="vca-grid-line gl-h" style="top:25%"></div>
+          <div class="vca-grid-line gl-h" style="top:50%"></div>
+          <div class="vca-grid-line gl-h" style="top:75%"></div>
+          <div class="vca-grid-line gl-v" style="left:25%"></div>
+          <div class="vca-grid-line gl-v" style="left:50%"></div>
+          <div class="vca-grid-line gl-v" style="left:75%"></div>
+          <div class="venue-pin-wrap">
+            <span class="venue-pin-icon">📍</span>
+            <span class="venue-pin-label">Musée Art Café, Dehradun</span>
+          </div>
+        </div>
+        <div class="venue-tag-overlay">
+          <div class="vto-time">11:30</div>
+          <div class="vto-label">Sunday Morning</div>
+        </div>
+      </div>
+
+      <div class="venue-info">
+        <div class="eyebrow">The Venue</div>
+        <div class="venue-name">Musée Art Café<br><span class="venue-name-italic">Dehradun</span></div>
+        <div class="venue-address">Dehradun, Uttarakhand<br>Exact address shared upon registration</div>
+
+        <div class="venue-facts">
+          <div class="vf-item">
+            <div class="vf-dot"></div>
+            <div class="vf-text"><strong>Why Musée Art Café?</strong> One of Dehradun's most beautiful independent spaces. The warmth of the room, the quality of the chai, the intimacy of the setting — all chosen deliberately to match the quality of the experience we create inside it.</div>
+          </div>
+          <div class="vf-item">
+            <div class="vf-dot"></div>
+            <div class="vf-text"><strong>Arrival:</strong> Please arrive by 11:20 AM. Tea and coffee served from 11:30. The session begins at 11:45 with everyone settled.</div>
+          </div>
+          <div class="vf-item">
+            <div class="vf-dot"></div>
+            <div class="vf-text"><strong>What to wear:</strong> Comfortable clothes you don't mind getting colour on. We work with paint — happily and freely.</div>
+          </div>
+          <div class="vf-item">
+            <div class="vf-dot"></div>
+            <div class="vf-text"><strong>What to bring:</strong> Nothing. All materials, paper, brushes, and paint are provided. Just bring yourself and whatever memory your hands most want to hold.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COUNTDOWN ══ -->
+<div class="cd-section" id="countdown-section">
+  <span class="cd-eyebrow">Early Bird Pricing Ends</span>
+  <div class="cd-headline">20th March 2026 · Midnight</div>
+  <div class="cd-grid">
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-days">00</span>
+      <span class="cd-unit-label">Days</span>
+    </div>
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-hours">00</span>
+      <span class="cd-unit-label">Hours</span>
+    </div>
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-mins">00</span>
+      <span class="cd-unit-label">Minutes</span>
+    </div>
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-secs">00</span>
+      <span class="cd-unit-label">Seconds</span>
+    </div>
+  </div>
+  <div class="cd-sub">After 20 March, the price moves to <strong>₹999</strong>. Register now at ₹799.</div>
+</div>
+
+<!-- ══ REGISTRATION ══ -->
+<section class="reg-section" id="register">
+  <div class="section-wrap">
+    <div class="reg-grid">
+
+      <div class="reg-left">
+        <div class="eyebrow">Registration</div>
+        <h2 class="section-title">Reserve Your <em>Seat</em></h2>
+        <p class="section-lead">25 seats. Once they're gone, the next opportunity is a future workshop. Both previous workshops filled before the closing date.</p>
+
+        <div style="display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem">
+          <div style="padding:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:3px">
+            <div style="font-family:'IM Fell English SC',serif;font-size:0.55rem;letter-spacing:0.14em;color:var(--dim);margin-bottom:0.4rem">Workshop Details</div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem">
+              <div style="display:flex;gap:0.75rem;align-items:center;font-size:0.82rem;color:var(--ivory3)"><span style="color:var(--gold)">📅</span> <strong style="color:var(--ivory)">Sunday, 5th April 2026</strong></div>
+              <div style="display:flex;gap:0.75rem;align-items:center;font-size:0.82rem;color:var(--ivory3)"><span style="color:var(--gold)">⏰</span> 11:30 AM · Please arrive by 11:20</div>
+              <div style="display:flex;gap:0.75rem;align-items:center;font-size:0.82rem;color:var(--ivory3)"><span style="color:var(--gold)">📍</span> Musée Art Café, Dehradun</div>
+              <div style="display:flex;gap:0.75rem;align-items:center;font-size:0.82rem;color:var(--ivory3)"><span style="color:var(--gold)">👥</span> For those 50 years and above</div>
+              <div style="display:flex;gap:0.75rem;align-items:center;font-size:0.82rem;color:var(--ivory3)"><span style="color:var(--gold)">🎨</span> Theme: Something My Hands Remember</div>
+            </div>
+          </div>
+
+          <div style="padding:1.25rem;background:var(--gold-gl);border:1px solid var(--gold-gd);border-radius:3px">
+            <div style="font-family:'Playfair Display',serif;font-size:0.9rem;font-style:italic;color:var(--gold);margin-bottom:0.4rem">Early Bird Pricing</div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-size:0.78rem;color:var(--muted)">Until 20 March 2026</div>
+                <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold)">₹799</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:0.72rem;color:var(--dim)">After 20 March</div>
+                <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--dim);text-decoration:line-through">₹999</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.8;font-weight:300">
+          <div style="font-family:'IM Fell English SC',serif;font-size:0.55rem;letter-spacing:0.14em;color:var(--dim);margin-bottom:0.5rem">Questions?</div>
+          Reach Chandni directly on WhatsApp or Instagram.<br>
+          <strong style="color:var(--ivory3)">@chandnipaints</strong> · <strong style="color:var(--ivory3)">@the_creative_pod_by_chandni</strong><br>
+          WhatsApp: <a href="https://wa.me/919910884784" style="color:var(--gold);text-decoration:none">+91 99108 84784</a>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="reg-form-wrap">
+        <div class="rfh">
+          <div class="rfh-title">Register for Workshop III</div>
+          <div class="rfh-badge">25 Seats Only</div>
+        </div>
+
+        <div class="rfb" id="form-body">
+          <!-- Price selector -->
+          <div class="psel">
+            <button class="psel-opt active" id="form-early" onclick="selectFormPrice('early')">
+              <div class="pso-label">Early Bird</div>
+              <div class="pso-price">₹799</div>
+              <div class="pso-note">Until 20 March</div>
+            </button>
+            <button class="psel-opt" id="form-reg" onclick="selectFormPrice('regular')">
+              <div class="pso-label">Regular</div>
+              <div class="pso-price">₹999</div>
+              <div class="pso-note">After 20 March</div>
+            </button>
+          </div>
+
+          <div class="form-fields">
+            <div class="field-row">
+              <div class="ff">
+                <label class="ff-label">Full Name</label>
+                <input class="ff-input" id="f-name" type="text" placeholder="Your name">
+              </div>
+              <div class="ff">
+                <label class="ff-label">Age</label>
+                <input class="ff-input" id="f-age" type="number" placeholder="50+" min="50">
+              </div>
+            </div>
+            <div class="ff">
+              <label class="ff-label">WhatsApp Number</label>
+              <input class="ff-input" id="f-phone" type="tel" placeholder="+91 00000 00000">
+            </div>
+            <div class="ff">
+              <label class="ff-label">Email (optional)</label>
+              <input class="ff-input" id="f-email" type="email" placeholder="your@email.com">
+            </div>
+            <div class="ff">
+              <label class="ff-label">Attended a previous workshop?</label>
+              <select class="ff-select" id="f-prev">
+                <option value="">Select</option>
+                <option>No — this will be my first</option>
+                <option>Yes — Workshop I (September 2024)</option>
+                <option>Yes — Workshop II (January 2025)</option>
+                <option>Yes — both workshops</option>
+              </select>
+            </div>
+            <div class="ff">
+              <label class="ff-label">How did you hear about this?</label>
+              <div class="heard-chips">
+                <div class="hc" onclick="toggleChip(this)">Instagram</div>
+                <div class="hc" onclick="toggleChip(this)">WhatsApp</div>
+                <div class="hc" onclick="toggleChip(this)">A friend</div>
+                <div class="hc" onclick="toggleChip(this)">Attended before</div>
+                <div class="hc" onclick="toggleChip(this)">Notice board</div>
+                <div class="hc" onclick="toggleChip(this)">Other</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="form-submit" onclick="submitForm()">Reserve My Seat for ₹<span id="submit-price">799</span></button>
+          <button class="form-wa-alt" onclick="window.open('https://wa.me/919910884784?text=I%20want%20to%20register%20for%20Art%20Beyond%20Age%20Workshop%203%20%E2%80%94%205%20April%202026.%20My%20name%20is%3A%20','_blank')">
+            <span style="color:var(--wa)">💬</span> Register via WhatsApp instead
+          </button>
+          <div class="form-note">✦ Your spot is confirmed once Chandni sends a WhatsApp confirmation · Payment details shared on confirmation</div>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <div class="fs-icon">✦</div>
+          <div class="fs-h">You're in.</div>
+          <div class="fs-b">Thank you for registering. Chandni will send a WhatsApp confirmation within 2 hours with all the details you need for 5th April.<br><br>If you haven't heard back in 2 hours, please reach out directly.</div>
+          <a class="fs-wa" href="https://wa.me/919910884784?text=I%20just%20registered%20for%20Workshop%203" target="_blank">Confirm on WhatsApp ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq-section">
+  <div class="section-wrap">
+    <div class="faq-inner">
+      <div class="faq-title">Questions</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">I have never painted in my life. Is this really for me? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Especially for you. The technique used — colour handprints — requires no drawing skill whatsoever. You press your hand onto paper. That's it. The artwork begins from there, and it is already beautiful before you've added a single brushstroke. Both previous workshops had participants who had never done anything creative as adults. Most left with their favourite thing they've ever made.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is ₹999 really worth it for a 90-minute session? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">That's a fair question to ask. The fee covers professional art materials (₹250+), tea and coffee, a facilitated experience designed and refined over two workshops, a photograph of your finished artwork, and a certificate of participation. But more than the material value — you are paying for 90 minutes in a room where you will be genuinely heard, make something real with your hands, and leave feeling differently than you arrived. Both previous participants said they would pay more. We've kept the fee accessible deliberately.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What is the Early Bird price and when does it end? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">The Early Bird price is ₹799. It is available until midnight on 20th March 2026. After that, the price moves to ₹999 for the remaining seats. There is no further discount or offer after that date. If you are considering it, register before 20 March.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do I pay? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">After you submit the registration form, Chandni will confirm your spot via WhatsApp and share payment details (UPI/bank transfer). Payment is made after confirmation, not before. Your spot is reserved on registration — not on payment.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What if I need to cancel? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Please let us know at least 5 days before the workshop (by 31st March) if you cannot attend. We will offer your seat to someone on the waitlist. Cancellations after 31st March cannot be refunded as materials will have been prepared, but we will hold your payment as credit towards the next workshop.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I bring a family member or friend? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Absolutely — and we encourage it. Many of our best sessions happen when two people come together. Each person registers individually and pays separately. If you'd like to register a family member as a gift, just mention this when you message Chandni on WhatsApp and she'll guide you through it.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is this only for Dehradun residents? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">The workshop is held in Dehradun and is best suited to those who can travel to Musée Art Café on 5th April. However, if you're visiting from another city or your parents live in Dehradun and you'd like to register them, we welcome that too. Contact Chandni directly via WhatsApp for assistance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">Art Beyond Age</div>
+  <div class="footer-sub">By The Creative Pod · Chandni Kamboj · Dehradun</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/chandnipaints" target="_blank">@chandnipaints</a>
+    <a href="https://instagram.com/the_creative_pod_by_chandni" target="_blank">@the_creative_pod_by_chandni</a>
+    <a href="https://thecreativepod.co.in" target="_blank">thecreativepod.co.in</a>
+    <a href="https://wa.me/919910884784" target="_blank">WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2026 The Creative Pod · Art Beyond Age · Workshop III · 5 April 2026</div>
+</footer>
+
+<!-- ══ STICKY BAR ══ -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sb-left">
+    <div class="sb-event">Art Beyond Age · Workshop III</div>
+    <div class="sb-detail">📅 5 April 2026 &nbsp;·&nbsp; ⏰ 11:30 AM &nbsp;·&nbsp; 📍 Musée Art Café, Dehradun</div>
+  </div>
+  <div class="sb-right">
+    <div>
+      <div class="sb-price" id="sb-price">₹799</div>
+      <div class="sb-price-note" id="sb-note">Early Bird · Until 20 March</div>
+    </div>
+    <a href="#register" class="sb-cta">Reserve Now</a>
+  </div>
+</div>
+
+<script>
+/* ── CUSTOM CURSOR ── */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a,button,.hc,.psel-opt,.ps-opt,.faq-q').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+/* ── EARLY BIRD COUNTDOWN (to 20 March 2026 midnight IST) ── */
+function updateCountdown() {
+  const target = new Date('2026-03-20T23:59:59+05:30');
+  const now    = new Date();
+  const diff   = target - now;
+
+  if (diff <= 0) {
+    // Early bird expired
+    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+      document.getElementById(id).textContent = '00';
+    });
+    document.getElementById('eb-countdown').textContent = 'Closed';
+    document.getElementById('countdown-section').style.background = 'var(--border)';
+    return;
+  }
+
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000)  / 60000);
+  const secs  = Math.floor((diff % 60000)    / 1000);
+
+  const pad = n => String(n).padStart(2,'0');
+
+  document.getElementById('cd-days').textContent  = pad(days);
+  document.getElementById('cd-hours').textContent = pad(hours);
+  document.getElementById('cd-mins').textContent  = pad(mins);
+
+  const secEl = document.getElementById('cd-secs');
+  const prev  = secEl.textContent;
+  secEl.textContent = pad(secs);
+  if (prev !== pad(secs)) {
+    secEl.classList.add('bump');
+    setTimeout(() => secEl.classList.remove('bump'), 200);
+  }
+
+  const dStr = days > 0 ? `${days}d ` : '';
+  document.getElementById('eb-countdown').textContent = `${dStr}${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ── PRICE SELECTION (hero panel) ── */
+let heroPriceMode = 'early';
+function selectPrice(mode) {
+  heroPriceMode = mode;
+  document.getElementById('ps-early').classList.toggle('active', mode === 'early');
+  document.getElementById('ps-reg').classList.toggle('active', mode === 'regular');
+
+  const amountEl = document.getElementById('pp-amount');
+  const noteEl   = document.getElementById('pp-note');
+  const savingEl = document.getElementById('pp-saving');
+
+  if (mode === 'early') {
+    amountEl.textContent = '799';
+    amountEl.style.color = 'var(--gold)';
+    noteEl.textContent   = 'Early Bird Price · Valid until 20 March 2026';
+    savingEl.classList.remove('hidden');
+  } else {
+    amountEl.textContent = '999';
+    amountEl.style.color = 'var(--ivory)';
+    noteEl.textContent   = 'Regular Price · Available after 20 March 2026';
+    savingEl.classList.add('hidden');
+  }
+}
+
+/* ── PRICE SELECTION (form) ── */
+let formPriceMode = 'early';
+function selectFormPrice(mode) {
+  formPriceMode = mode;
+  document.getElementById('form-early').classList.toggle('active', mode === 'early');
+  document.getElementById('form-reg').classList.toggle('active', mode === 'regular');
+  document.getElementById('submit-price').textContent = mode === 'early' ? '799' : '999';
+}
+
+/* ── HEARD CHIPS ── */
+function toggleChip(el) { el.classList.toggle('on'); }
+
+/* ── FORM SUBMIT ── */
+function submitForm() {
+  const name  = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const age   = document.getElementById('f-age').value;
+
+  if (!name)  { alert('Please enter your name'); return; }
+  if (!phone) { alert('Please enter your WhatsApp number'); return; }
+  if (!age || parseInt(age) < 50) { alert('This workshop is for those 50 and above'); return; }
+
+  document.getElementById('form-body').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+
+  // Scroll to confirm
+  document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ── FAQ TOGGLE ── */
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── STICKY BAR ── */
+const stickyBar = document.getElementById('sticky-bar');
+window.addEventListener('scroll', () => {
+  stickyBar.classList.toggle('visible', window.scrollY > 600);
+});
+
+/* ── AUTO PRICE BASED ON DATE ── */
+(function() {
+  const now = new Date();
+  const ebDeadline = new Date('2026-03-20T23:59:59+05:30');
+  if (now > ebDeadline) {
+    // Auto-switch to regular
+    selectPrice('regular');
+    selectFormPrice('regular');
+    document.getElementById('sb-price').textContent = '₹999';
+    document.getElementById('sb-note').textContent = 'Regular Price';
+    const navPrice = document.querySelector('.nav-price');
+    if (navPrice) navPrice.innerHTML = 'Regular <strong>₹999</strong>';
+  }
+})();
+</script>
+</body>
+</html>
